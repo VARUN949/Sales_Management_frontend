@@ -27,7 +27,7 @@ export default function OrderList() {
             }
             else {
                 console.log("fail")
-                alert("internet issue")
+                alert("no  orders")
             }
         }
         if (user.role === "customer") {
@@ -47,7 +47,7 @@ export default function OrderList() {
             }
             else {
                 console.log("fail")
-                alert("internet issue")
+                alert("no orders")
             }
         }
     }

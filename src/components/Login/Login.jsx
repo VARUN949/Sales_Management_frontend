@@ -12,8 +12,6 @@ export default function Login() {
     const [role, setRole] = useState("salesEmployee")
     const { user, setUser } = useContext(MyContext);
     const navigate = useNavigate();
-
-
     const handleChange = (e) => {
         if (e.target.name === "email") {
             setLoginData({
@@ -50,12 +48,7 @@ export default function Login() {
                 id: data.id
             })
             alert("successfully login")
-            if (user.role === "salesEmployee") {
-                navigate('/order');
-            }
-            if (user.role === "customer") {
-                navigate('/Products');
-            }
+
 
         }
         else {
@@ -63,9 +56,16 @@ export default function Login() {
         }
     }
 
+
+
     return (
         <div className=''>
-            {/* {console.log(user)} */}
+            {
+                user.role === "salesEmployee" && navigate('/order')
+            }
+            {
+                user.role === "customer" && navigate('/Products')
+            }
             <div className='flex mt-20 text-white text-4xl font-bold'>
                 <h1 className='flex m-auto'>Login</h1>
             </div>
