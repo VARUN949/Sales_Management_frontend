@@ -68,6 +68,91 @@ export default function Order({ order }) {
         });
         if (response.ok) {
             setStatus(true)
+
+            const response2 = await fetch(`https://salesmanagement.onrender.com/bill-generator`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(
+                    {
+                        orderId: order._id,
+                        productName: product[0].Name,
+                        productId: product[0]._id,
+                        customerId: customer[0]._id,
+                        SalesEmployeeId: salesEmployee[0]._id,
+                        quntity: order.Qunity,
+                        price: product[0].Price,
+                        totalPrice: order.Qunity * product[0].Price
+                    }
+                ),
+            });
+
+            if (response2.ok) {
+                const response3 = await fetch(`https://salesmanagement.onrender.com/send-mail`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(
+                        {
+                            mail: salesEmployee[0].email,
+                            filename: `${order._id}.txt`
+                        }
+                    ),
+                });
+
+                const response4 = await fetch(`https://salesmanagement.onrender.com/send-mail`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(
+                        {
+                            mail: customer[0].email,
+                            filename: `${order._id}.txt`
+                        }
+                    ),
+                });
+
+                if (response3.ok && response4.ok) {
+                    alert("mail sended successfully")
+                }
+            }
+
+            // console.log("order id")
+            // console.log("file name")
+
+            // console.log(order._id)
+
+            // console.log("product name")
+            // console.log(product[0].Name)
+
+
+            // console.log("product id")
+            // console.log(product[0]._id)
+
+            // console.log(`customerID ${customer}`)
+            // console.log(customer[0]._id)
+
+            // console.log(`salesempl id ${customer}`)
+            // console.log(salesEmployee[0]._id)
+
+            // console.log(`quntity ${customer}`)
+            // console.log(order.Qunity)
+
+
+            // console.log(`price ${customer}`)
+            // console.log(product[0].Price)
+
+            // console.log("total")
+            // console.log(order.Qunity * product[0].Price)
+
+            // console.log("mail")
+            // console.log(salesEmployee[0].email)
+            // console.log(customer[0].email)
+
+
             alert("update successfully")
         }
 
@@ -97,7 +182,6 @@ export default function Order({ order }) {
 
     return (
         <div>
-            {console.log(salesEmployee)}
             {customer && salesEmployee && product &&
                 <div className=" border h-auto mt-24 m-auto w-100 mb-20 bg-slate-400 w-1/3 rounded">
                     <div className='flex m-4'>

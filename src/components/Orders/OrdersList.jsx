@@ -11,7 +11,6 @@ export default function OrderList() {
     }, [])
     const generateOrder = async () => {
         if (user.role === "salesEmployee") {
-            console.log(user)
             const response = await fetch('https://salesmanagement.onrender.com/order/salesEmployeeID', {
                 method: 'POST',
                 headers: {
@@ -26,12 +25,10 @@ export default function OrderList() {
                 setOrders(data)
             }
             else {
-                console.log("fail")
                 alert("no  orders")
             }
         }
         if (user.role === "customer") {
-            console.log(user)
             const response = await fetch('https://salesmanagement.onrender.com/order/customerID', {
                 method: 'POST',
                 headers: {
@@ -46,7 +43,6 @@ export default function OrderList() {
                 setOrders(data)
             }
             else {
-                console.log("fail")
                 alert("no orders")
             }
         }
@@ -63,14 +59,12 @@ export default function OrderList() {
         <div className='h-[100vh] bg-slate-700' id="ordres">
 
             {user.role === "salesEmployee" && orders && orders.map((order, index) => {
-                console.log(order)
                 return (<Order order={order} key={index} />)
             })
             }
             {largeOrder()
             }
             {user.role === "customer" && orders && orders.map((order, index) => {
-                console.log(order)
                 return (<Order order={order} key={index} />)
             })
             }
