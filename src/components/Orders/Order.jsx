@@ -6,7 +6,7 @@ export default function Order({ order }) {
     const [salesEmployee, setSalesEmplyee] = useState([{}])
     const [product, setProduct] = useState([{}])
     const { user } = useContext(MyContext)
-
+    const [status, setStatus] = useState(order.approvalFromSaleEmployee)
 
     const getCustomer = async () => {
         const response = await fetch('https://salesmanagement.onrender.com/customer/id', {
@@ -56,7 +56,7 @@ export default function Order({ order }) {
         }
     }
 
-    const updateStatus = async () => {
+    const updateStatusAccept = async () => {
         const response = await fetch(`https://salesmanagement.onrender.com/order/${order._id}`, {
             method: 'PUT',
             headers: {
@@ -67,6 +67,23 @@ export default function Order({ order }) {
             }),
         });
         if (response.ok) {
+            setStatus(true)
+            alert("update successfully")
+        }
+
+    }
+    const updateStatusRejected = async () => {
+        const response = await fetch(`https://salesmanagement.onrender.com/order/${order._id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "approvalFromSaleEmployee": false
+            }),
+        });
+        if (response.ok) {
+            setStatus(false)
             alert("update successfully")
         }
     }
@@ -93,7 +110,7 @@ export default function Order({ order }) {
                     </div>
                     <div className='flex m-4'>
                         <p>Approval From SaleEmployee &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:-&nbsp;&nbsp;</p>
-                        {order.approvalFromSaleEmployee ? <p>{order.approvalFromSaleEmployee === true ? "Approved" : "rejected"}</p> : <p>pending</p>}
+                        {status === true || status === false ? <p>{status === true ? "Approved" : "rejected"}</p> : <p>pending</p>}
                     </div>
                     <div className='flex m-4'>
                         <p>customerID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:-&nbsp;&nbsp;</p>
@@ -104,10 +121,10 @@ export default function Order({ order }) {
                         <p>{order.salesEmployeeID}</p>
                     </div>
                     <div className='flex m-4'>
-                        {user.role === "salesEmployee" && order.approvalFromSaleEmployee !== true &&
+                        {user.role === "salesEmployee" && status !== true && status !== false &&
                             <>
-                                <button className='mr-5 border w-24 bg-slate-700 text-white rounded-md ' onClick={updateStatus}>Accept</button>
-                                <button className='mr-5 border w-24 bg-slate-700 text-white rounded-md ' >Reject</button>
+                                <button className='mr-5 border w-24 bg-slate-700 text-white rounded-md ' onClick={updateStatusAccept}>Accept</button>
+                                <button className='mr-5 border w-24 bg-slate-700 text-white rounded-md ' onClick={updateStatusRejected}>Reject</button>
                             </>
                         }
 

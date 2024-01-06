@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import MyContext from '../../Context/MyContex'
+import { useNavigate } from 'react-router-dom'
 
 
 export default function Billing() {
@@ -14,6 +15,7 @@ export default function Billing() {
         Qunity: 0
     })
     const { user } = useContext(MyContext)
+    const navigator = useNavigate()
 
     const newOrderGenerator = async () => {
 
@@ -37,6 +39,10 @@ export default function Billing() {
         if (response.ok) {
             alert("your order placed")
             setSalesEmplyee(data)
+            navigator("/order")
+        }
+        else {
+            alert("please buy again ")
         }
     }
 
