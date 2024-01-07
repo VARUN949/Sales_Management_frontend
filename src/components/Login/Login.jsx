@@ -64,6 +64,9 @@ export default function Login() {
                 user.role === "salesEmployee" && navigate('/order')
             }
             {
+                user.role === "admin" && navigate('/allSalesEmployee')
+            }
+            {
                 user.role === "customer" && navigate('/Products')
             }
             <div className='flex mt-20 text-white text-4xl font-bold'>

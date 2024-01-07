@@ -39,7 +39,6 @@ export default function SignUp() {
                             <label className=" text-1xl text-white" htmlFor="role">Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                             <select onChange={handleChange} className=" relative " id="role">
                                 <option value="salesEmployee">Sales Employee</option>
-                                <option value="admin">Admin</option>
                                 <option value="customer">Customer</option>
                             </select>
                         </div>

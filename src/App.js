@@ -9,6 +9,9 @@ import OrderList from './components/Orders/OrdersList'
 import ProductList from './components/Products/ProductList';
 import Billing from './components/Billing/Billing';
 import NewProduct from './components/Products/NewProduct';
+import AllOrder from './components/Orders/AllOrder';
+import AllCustomers from './components/AllCustomer/AllCustomers';
+import AllSalesEmployee from './components/AllSalesEmployees/AllSalesEmployee';
 
 function App() {
   return (
@@ -23,6 +26,9 @@ function App() {
             <Route path="/Products" element={<><Navbar /><ProductList /></>}></Route>
             <Route path="/billing" element={<><Navbar /><Billing /></>}></Route>
             <Route path='/newProduct' element={<><Navbar /><NewProduct /></>}></Route>
+            <Route path='/allOrders' element={<><Navbar /><AllOrder /></>}></Route>
+            <Route path='/allCustomers' element={<><Navbar /><AllCustomers /></>}></Route>
+            <Route path='/allSalesEmployee' element={<><Navbar /><AllSalesEmployee /></>}></Route>
 
 
           </Routes>

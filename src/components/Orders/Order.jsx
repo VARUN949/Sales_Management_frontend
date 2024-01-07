@@ -56,6 +56,22 @@ export default function Order({ order }) {
         }
     }
 
+    const deleteOrder = async () => {
+        const response = await fetch('https://salesmanagement.onrender.com/order/byid', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "orderId": `${order._id}`
+            }),
+        });
+        if (response.ok) {
+            alert("order successfully deleted")
+            document.getElementById(`orderid_${order._id}`).style.display = 'none';
+        }
+    }
+
     const updateStatusAccept = async () => {
         const response = await fetch(`https://salesmanagement.onrender.com/order/${order._id}`, {
             method: 'PUT',
@@ -119,40 +135,6 @@ export default function Order({ order }) {
                     alert("mail sended successfully")
                 }
             }
-
-            // console.log("order id")
-            // console.log("file name")
-
-            // console.log(order._id)
-
-            // console.log("product name")
-            // console.log(product[0].Name)
-
-
-            // console.log("product id")
-            // console.log(product[0]._id)
-
-            // console.log(`customerID ${customer}`)
-            // console.log(customer[0]._id)
-
-            // console.log(`salesempl id ${customer}`)
-            // console.log(salesEmployee[0]._id)
-
-            // console.log(`quntity ${customer}`)
-            // console.log(order.Qunity)
-
-
-            // console.log(`price ${customer}`)
-            // console.log(product[0].Price)
-
-            // console.log("total")
-            // console.log(order.Qunity * product[0].Price)
-
-            // console.log("mail")
-            // console.log(salesEmployee[0].email)
-            // console.log(customer[0].email)
-
-
             alert("update successfully")
         }
 
@@ -181,27 +163,31 @@ export default function Order({ order }) {
 
 
     return (
-        <div>
+        <div id={`orderid_${order._id}`}>
             {customer && salesEmployee && product &&
                 <div className=" border h-auto mt-24 m-auto w-100 mb-20 bg-slate-400 w-1/3 rounded">
                     <div className='flex m-4'>
-                        <p>Pruduct ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:-&nbsp;&nbsp;</p>
+                        <p>OrderID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:-&nbsp;&nbsp;</p>
+                        <p>{order._id}</p>
+                    </div>
+                    <div className='flex m-4'>
+                        <p>Pruduct ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:-&nbsp;&nbsp;</p>
                         <p>{product[0].Name}</p>
                     </div>
                     <div className='flex m-4'>
-                        <p>Qunity &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :-&nbsp;&nbsp;</p>
+                        <p>Qunity &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :-&nbsp;&nbsp;</p>
                         <p>{order.Qunity}</p>
                     </div>
                     <div className='flex m-4'>
-                        <p>Approval From SaleEmployee &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:-&nbsp;&nbsp;</p>
+                        <p>Approval From SaleEmployee &nbsp;&nbsp;&nbsp;:-&nbsp;&nbsp;</p>
                         {status === true || status === false ? <p>{status === true ? "Approved" : "rejected"}</p> : <p>pending</p>}
                     </div>
                     <div className='flex m-4'>
-                        <p>customerID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:-&nbsp;&nbsp;</p>
+                        <p>customerID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:-&nbsp;&nbsp;</p>
                         <p>{customer[0].name}</p>
                     </div>
                     <div className='flex m-4'>
-                        <p>salesEmployeeID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:-&nbsp;&nbsp;</p>
+                        <p>salesEmployeeID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:-&nbsp;&nbsp;</p>
                         <p>{order.salesEmployeeID}</p>
                     </div>
                     <div className='flex m-4'>
@@ -210,6 +196,11 @@ export default function Order({ order }) {
                                 <button className='mr-5 border w-24 bg-slate-700 text-white rounded-md ' onClick={updateStatusAccept}>Accept</button>
                                 <button className='mr-5 border w-24 bg-slate-700 text-white rounded-md ' onClick={updateStatusRejected}>Reject</button>
                             </>
+                        }
+                        {
+                            user.role === "admin" &&
+                            <button className='mr-5 border w-24 bg-slate-700 text-white rounded-md ' onClick={deleteOrder}>Delete</button>
+
                         }
 
                     </div>
