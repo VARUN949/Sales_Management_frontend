@@ -25,8 +25,7 @@ export default function Billing() {
             salesEmployeeID: salesEmployee[0]._id,
             customerID: customer[0]._id
         })
-        console.log(newOrder)
-        console.log(salesEmployee);
+
         const response = await fetch(' https://salesmanagement.onrender.com/order', {
             method: 'POST',
             headers: {
@@ -47,7 +46,7 @@ export default function Billing() {
     }
 
     const getSalesEmployee = async () => {
-        console.log(customer);
+
         const response = await fetch('https://salesmanagement.onrender.com/salesEmployee/city', {
             method: 'POST',
             headers: {
@@ -60,6 +59,7 @@ export default function Billing() {
         const data = await response.json()
         if (response.ok) {
             setSalesEmplyee(data)
+            newOrderGenerator()
         }
     }
 
@@ -79,11 +79,9 @@ export default function Billing() {
         }
     }
 
-    const handleBuy = (e) => {
+    const handleBuy = async (e) => {
         e.preventDefault()
-        getSalesEmployee()
-        newOrderGenerator()
-        console.log(newOrder)
+        await getSalesEmployee()
     }
 
     useEffect(() => {
@@ -108,9 +106,6 @@ export default function Billing() {
                         <p>Customer Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:-&nbsp;&nbsp;</p>
                         <p>{customer[0].email}</p>
                     </div>
-
-
-
                     <div className='flex m-4'>
                         <p>Pruduct ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:-&nbsp;&nbsp;</p>
                         <p>{buyProduct.product._id}</p>

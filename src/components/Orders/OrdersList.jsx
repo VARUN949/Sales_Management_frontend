@@ -68,7 +68,6 @@ export default function OrderList() {
                 return (<Order order={order} key={index} />)
             })
             }
-
         </div>
     )
 }

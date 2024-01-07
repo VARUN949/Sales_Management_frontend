@@ -26,12 +26,14 @@ export default function NavbarList() {
                 <>
                     <NavbarItem name="Products" />
                     <NavbarItem name="order" />
-                    <button onClick={SignOut}><NavbarItem name="SignOut" /></button></>
+                    <button onClick={SignOut}><NavbarItem name="SignOut" /></button>
+                </>
             }
             {
                 user.role === "admin" &&
-                <> <NavbarItem name="order" />
-                    <button onClick={SignOut}><NavbarItem name="SignOut" /></button></>
+                <> <NavbarItem name="New Product" />
+                    <button onClick={SignOut}><NavbarItem name="SignOut" /></button>
+                </>
             }
             {
                 user.role === "" &&

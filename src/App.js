@@ -8,6 +8,7 @@ import MyProvider from './Context/MyProvider'
 import OrderList from './components/Orders/OrdersList'
 import ProductList from './components/Products/ProductList';
 import Billing from './components/Billing/Billing';
+import NewProduct from './components/Products/NewProduct';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
             <Route path="/order" element={<><Navbar /><OrderList /></>}></Route>
             <Route path="/Products" element={<><Navbar /><ProductList /></>}></Route>
             <Route path="/billing" element={<><Navbar /><Billing /></>}></Route>
-
+            <Route path='/newProduct' element={<><Navbar /><NewProduct /></>}></Route>
 
 
           </Routes>
